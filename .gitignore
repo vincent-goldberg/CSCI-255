@@ -1,0 +1,29 @@
+# Java / Build
+bin/
+target/
+out/
+*.class
+*.log
+
+#Eclipse
+.project
+.classpath
+.settings/
+
+OS cruft
+cat > .gitignore << 'EOF'
+# Java / Build
+bin/
+target/
+out/
+*.class
+*.log
+
+#Eclipse
+.project
+.classpath
+.settings/
+
+# OS cruft
+.DS_Store
+Thumbs.db
