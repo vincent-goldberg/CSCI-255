@@ -24,7 +24,8 @@ public class Censor {
 		try {
 			GetSentence(Str, Input);
 			
-			while (NumberOfChars != 0 ) {
+			while (NumberOfChars != 0 ) 
+			{
 				// Program logic
 				CopyString(StrCopy, Str);
 				MakeUpperCase(StrCopy);
@@ -48,7 +49,8 @@ public class Censor {
 			
 			System.out.println("Goodbye....."); // User entered an empty string; ending program
 			
-		} catch (ArrayIndexOutOfBoundsException e) {
+		} catch (ArrayIndexOutOfBoundsException e) 
+		{
 			System.out.println("An Array went out of bounds.");
 			System.out.println("Program terminated.");
 		}
@@ -61,7 +63,8 @@ public class Censor {
 	 * Returns: void
 	 * Precondition: Array size is at least MAX_LENGTH.
 	 */
-	public static void GetSentence(char[] SentenceArray, Scanner UserInput) {
+	public static void GetSentence(char[] SentenceArray, Scanner UserInput) 
+	{
 		System.out.print("\nEnter Sentence ===> ");
 		String Sentence = UserInput.nextLine();
 		
@@ -69,7 +72,8 @@ public class Censor {
 		NumberOfChars = Math.min(Sentence.length(), MAX_LENGTH - 2); // Minus 2 to add space for blank before and after sentence
 		
 		// Copy sentence string into character array, character by character
-		for (int i = 0; i < NumberOfChars; i++) {
+		for (int i = 0; i < NumberOfChars; i++) 
+		{
 			SentenceArray[i] = Sentence.charAt(i);
 		}
 	}
@@ -81,8 +85,10 @@ public class Censor {
 	 * Returns: void
 	 * Precondition: NumberOfChars <= SentenceArray.length
 	 */
-	public static void PrintArray(char[] SentenceArray) {
-		for (int i = 0; i < NumberOfChars; i++) {
+	public static void PrintArray(char[] SentenceArray) 
+	{
+		for (int i = 0; i < NumberOfChars; i++) 
+		{
 			System.out.print(SentenceArray[i]);
 		}
 	}
@@ -94,8 +100,10 @@ public class Censor {
 	 * Returns: void
 	 * Precondition: Both arrays must be at least MAX_LENGTH in size
 	 */
-	public static void CopyString(char[] DestArray, char[] SourceArray) {
-		for (int i = 0; i < NumberOfChars; i++) {
+	public static void CopyString(char[] DestArray, char[] SourceArray) 
+	{
+		for (int i = 0; i < NumberOfChars; i++) 
+		{
 			DestArray[i] = SourceArray[i];
 		}
 	}
@@ -107,8 +115,10 @@ public class Censor {
 	 * Returns: void
 	 * Precondition: Array contains NumberOfChars valid characters.
 	 */
-	public static void MakeUpperCase(char[] SentenceArray) {
-		for (int i = 0; i < NumberOfChars; i++) {
+	public static void MakeUpperCase(char[] SentenceArray) 
+	{
+		for (int i = 0; i < NumberOfChars; i++) 
+		{
 			SentenceArray[i] = Character.toUpperCase(SentenceArray[i]);
 		}
 	}
@@ -119,9 +129,11 @@ public class Censor {
 	 * Returns: void
 	 * Precondition: There must be space in the array (MAX_LENGTH) to add two chars.
 	 */
-	public static void InsertBlankStartEnd(char[] SentenceArray) {
+	public static void InsertBlankStartEnd(char[] SentenceArray) 
+	{
 		// Shift everything right by 1 to make space at start
-		for (int i = NumberOfChars; i > 0; i--) {
+		for (int i = NumberOfChars; i > 0; i--) 
+		{
 			SentenceArray[i] = SentenceArray[i - 1];
 		}
 		SentenceArray[0] = ' '; // Insert space at beginning
@@ -137,11 +149,14 @@ public class Censor {
 	 * Returns: void
 	 * Precondition: SentenceArray has NumberOfChars
 	 */
-	public static void ReplacePuncWithBlanks(char[] SentenceArray) {
+	public static void ReplacePuncWithBlanks(char[] SentenceArray) 
+	{
 		for (int i = 0; i < NumberOfChars; i++) {
-			if (Character.isLetterOrDigit(SentenceArray[i]) || SentenceArray[i] == ' ') {
+			if (Character.isLetterOrDigit(SentenceArray[i]) || SentenceArray[i] == ' ') 
+			{
 				continue; // Leave as-is
-			} else {
+			} else 
+			{
 				SentenceArray[i] = ' ';
 			}
 		}
@@ -154,15 +169,18 @@ public class Censor {
 	 * Returns: void
 	 * Precondition: SentenceArray is uppercase and has leading/trailing spaces. 
 	 */
-	public static void SearchAndReplaceHell(char[] SentenceArray) {
-		for (int i = 1; i <= NumberOfChars - 5; i++) {
+	public static void SearchAndReplaceHell(char[] SentenceArray) 
+	{
+		for (int i = 1; i <= NumberOfChars - 5; i++) 
+		{
 			//Check for pattern: ' ' 'H' 'E' 'L' 'L' ' '
 			if (SentenceArray[i - 1] == ' ' &&
 				SentenceArray[i] == 'H' &&
 				SentenceArray[i + 1] == 'E' &&
 				SentenceArray[i + 2] == 'L' &&
 				SentenceArray[i + 3] == 'L' &&
-				SentenceArray[i + 4] == ' ') {
+				SentenceArray[i + 4] == ' ') 
+			{
 				
 				// If matched, replace with: 'H' 'E' 'C' 'K'
 				SentenceArray[i + 2] = 'C';
@@ -178,9 +196,11 @@ public class Censor {
 	 * Returns: void
 	 * Precondition: First and last characters are blanks inserted earlier. 
 	 */
-	public static void DeleteBlankStartEnd(char[] SentenceArray) {
+	public static void DeleteBlankStartEnd(char[] SentenceArray) 
+	{
 		// Shift all characters one position to left to remove the first blank
-		for (int i = 0; i < NumberOfChars; i++) {
+		for (int i = 0; i < NumberOfChars; i++) 
+		{
 			SentenceArray[i] = SentenceArray[i + 1];
 		}
 		NumberOfChars--; // Remove the leading blank
@@ -196,31 +216,73 @@ public class Censor {
 	 * Returns: void
 	 * Precondition: Both arrays are aligned by character index.
 	 */
-	public static void OriginalCaseAndPunc(char[] ModifiedArray, char[] OriginalArray) {
-		for (int i = 0; i < NumberOfChars; i++) {
+	public static void OriginalCaseAndPunc(char[] ModifiedArray, char[] OriginalArray) 
+	{
+		for (int i = 0; i < NumberOfChars; i++) 
+		{
 			char OrigChar = OriginalArray[i];
 			char ModChar = ModifiedArray[i];
 			
 			// If original was punctuation, restore it
-			if (!Character.isLetterOrDigit(OrigChar) && OrigChar != ' ') {
+			if (!Character.isLetterOrDigit(OrigChar) && OrigChar != ' ') 
+			{
 				ModifiedArray[i] = OrigChar;
 			}
 			// If ModChar is 'C', match case of original 'L'
 			else if (Character.toUpperCase(ModChar) == 'C' && 
-					 Character.toUpperCase(OrigChar) == 'L') {
+					 Character.toUpperCase(OrigChar) == 'L') 
+			{
 				ModifiedArray[i] = Character.isUpperCase(OrigChar) ? 'C' : 'c';
 			}
 			// If ModChar is 'K', match case of original 'L'
 			else if (Character.toUpperCase(ModChar) == 'K' && 
-					 Character.toUpperCase(OrigChar) == 'L') {
+					 Character.toUpperCase(OrigChar) == 'L') 
+			{
 				ModifiedArray[i] = Character.isUpperCase(OrigChar) ? 'K' : 'k';
 			}
 			// Otherwise, restore the original character's case
-			else if (Character.toUpperCase(OrigChar) == ModChar) {
+			else if (Character.toUpperCase(OrigChar) == ModChar) 
+			{
 				ModifiedArray[i] = OrigChar;
 			}
 		}
 	}
-	
 }
 
+/* ************************ PROGRAM OUTPUT ************************
+
+Enter Sentence ===> Hell, it's hot as hell looking for shells in hell!
+
+Original: "Hell, it's hot as hell looking for shells in hell!"
+Censored: "Heck, it's hot as heck looking for shells in heck!"
+------------------------------------------------------------
+
+Enter Sentence ===> Hello, Hell.
+
+Original: "Hello, Hell."
+Censored: "Hello, Heck."
+------------------------------------------------------------
+
+Enter Sentence ===> Hell-yeah brother!
+
+Original: "Hell-yeah brother!"
+Censored: "Heck-yeah brother!"
+------------------------------------------------------------
+
+Enter Sentence ===> Holly hell, holly helleujah!
+
+Original: "Holly hell, holly helleujah!"
+Censored: "Holly heck, holly helleujah!"
+------------------------------------------------------------
+
+Enter Sentence ===> 
+Goodbye.....
+
+
+## Testing Out-of-bounds index:
+
+Enter Sentence ===> Helloss
+An Array went out of bounds.
+Program terminated.
+
+ */ 
