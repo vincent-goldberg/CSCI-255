@@ -101,7 +101,8 @@ public class BirthdayParadox
 		for (int i = 0; i < NUMBER_OF_SETS; i++)
 		{
 			int[] BirthdaySet = GenerateBirthdaySet();
-			if (HasDuplicate(BirthdaySet)) {
+			if (HasDuplicate(BirthdaySet)) 
+			{
 				MatchCount++;
 			}
 		}
@@ -116,8 +117,7 @@ public class BirthdayParadox
 	
 	
 	/**
-	 * Action: Displays a set of 23 birthdays; generates random birthdays 
-	 * 		   if input is null.
+	 * Action: Displays a set of 23 birthdays; generates random birthdays if input is null.
 	 * Parameters: int[] Birthdays - array of days (1-365), or null to generate test set 
 	 * Returns: void
 	 * Precondition: If non-null, array must contain values in range 1-365
@@ -133,12 +133,6 @@ public class BirthdayParadox
 		// Count frequencies
 		int[] MatchCount = new int[366];
 		for (int Day : Birthdays) MatchCount[Day]++;
-//		for (int count : MatchCount) {
-//			if (count != 0) {
-//				System.out.println(count);
-//			}
-//		}
-//		
 		
 		// Sort Birthdays
 		SelectionSort.sort(Birthdays);
@@ -151,19 +145,24 @@ public class BirthdayParadox
 		int CurrentDate = 0;   // Tracks date being displayed
 		int ColCount = 1;      // Tracks columns
 
-		for (int Day : Birthdays) {
-		    if (Day == CurrentDate) {
+		for (int Day : Birthdays) 
+		{
+		    if (Day == CurrentDate) 
+		    {
 		        continue; // skip duplicates beyond the first
 		    }
 
 		    ConvertDayOfYear(Day);
 
 		    String entry;
-		    if (MatchCount[Day] > 1) {
+		    if (MatchCount[Day] > 1) 
+		    {
 		        // Multiple birthdays
 		        entry = String.format("(%d) %-10s %2d",
 		                               MatchCount[Day], MonthName(MonthNumber), DayNumber);
-		    } else {
+		    } 
+		    else 
+		    {
 		        // Normal birthday
 		        entry = String.format("    %-10s %2d",
 		                               MonthName(MonthNumber), DayNumber);
@@ -173,9 +172,12 @@ public class BirthdayParadox
 		    System.out.print(entry);
 
 		    // Handle spacing or newline
-		    if (ColCount % 3 == 0) {
+		    if (ColCount % 3 == 0) 
+		    {
 		        System.out.println();
-		    } else {
+		    } 
+		    else 
+		    {
 		        System.out.print("    ");
 		    }
 
@@ -184,132 +186,12 @@ public class BirthdayParadox
 		}
 
 		// End with newline if not already
-		if ((ColCount - 1) % 3 != 0) {
+		if ((ColCount - 1) % 3 != 0) 
+		{
 		    System.out.println();
 		}
-
+	}
 		
-//		int CurrentDate = 0;	// Tracks date being displayed
-//		int ColCount = 1; 		// Tracks columns
-//		// Loop to display duplicates or single birthdays
-//		for (int Day : Birthdays)
-//		{
-//			// Update global variables
-//			ConvertDayOfYear(Day);
-//			
-////			if (Day != CurrentDate) 
-//			if (MatchCount[Day] > 1 && Day != CurrentDate)
-//			{
-//				
-////				System.out.println(Day +  " " + MatchCount[Day]);
-//				
-//				// Multiple birthdays
-//				System.out.printf("(%d) %-10s %2d",
-//								  MatchCount[Day], MonthName(MonthNumber), DayNumber);
-//				// Spacing or newline
-//				if (ColCount % 3 == 0)
-//				{
-//					System.out.println();
-//				}
-//				else
-//				{
-//					System.out.print("    ");
-//				}
-//				
-//				CurrentDate = Day;
-//				ColCount++;
-//			}
-//			else if (Day != CurrentDate)
-//			{
-//				System.out.printf("    %-10s %2d", MonthName(MonthNumber), DayNumber);
-//				// Spacing or newline
-//				if (ColCount % 3 == 0)
-//				{
-//					System.out.println();
-//				}
-//				else
-//				{
-//					System.out.print("    ");
-//				}
-//				
-//				CurrentDate = Day;
-//				ColCount++;
-//				
-//			}
-			
-//			ColCount++;
-//			
-//			// Spacing or newline
-//			if (ColCount % 3 == 0)
-//			{
-//				System.out.println();
-//			}
-//			else
-//			{
-//				System.out.print("    ");
-//			}
-			
-//			else
-//			{
-//				System.out.printf("    %-10s %2d", MonthName(MonthNumber), DayNumber);
-//				System.out.println();
-//				CurrentDate = Day;
-//			}
-//		}
-		
-//		for (int i = 0; i < Birthdays.length; i++)
-//		{
-//			
-//			System.out.println(i + " " + MatchCount[i]);
-//		}
-		
-//		
-//		System.out.println("\nHere are the results of generating a set of 23 birthdays");
-//		System.out.println("\n=================================================================");
-		
-//		// Display table
-//		int Printed = 0; 	// HOw many birthdays actually printed
-//		for (int i = 0; i < Birthdays.length; i++)
-//		{
-//			// Update global variables
-//			int Day = Birthdays[i];
-//			ConvertDayOfYear(Day);
-//			
-//			int BirthdayMatches = MatchCount[i]; 	// Count of matched birthdays
-//			
-//			System.out.println(BirthdayMatches);
-//			if (BirthdayMatches > 1)
-//			{
-//				// Multiple birthdays
-//				System.out.printf("(%d) %-10s %2d",
-//								  BirthdayMatches, MonthName(MonthNumber), DayNumber);
-//				i += BirthdayMatches - 1; 	// Skip duplicates
-//			}
-//			else
-//			{
-//				// Single birthday
-//				System.out.printf("    %-10s %2d", MonthName(MonthNumber), DayNumber);
-//			}
-		}
-//			Printed++; 
-//			
-//			// Manage columns: 3 per row
-//			if (Printed % 3 == 0) 
-//			{
-//				System.out.println(); 	// End of row
-//			}
-//			else
-//			{
-//				System.out.print("     "); // Space between columns
-//			}
-//		}
-//		
-//		// If last row wasn't completed, end with newline
-//		if (Printed % 3 != 0) 
-//		{
-//			System.out.println();
-//		}
-//	}
 	
 	
 	/**
@@ -433,6 +315,211 @@ public class BirthdayParadox
 		}
 	}
 }
+
+/* ************************ PROGRAM OUTPUT ************************
+
+Menu Option: 1
+
+============ Birthday Paradox Menu ============
+1) Explain birthday paradox
+2) Check birthday paradox by generating 1000 sets of birthdays
+3) Display one set of 23 birthdays
+E) Exit
+Enter your choice --> 1
+
+If 23 persons are chosen at random, then the chances are more than 50% that at least two will have the same birthday!
+
+------------------------------------------------------------
+
+Menu Option: 2 (Tested twice)
+
+============ Birthday Paradox Menu ============
+1) Explain birthday paradox
+2) Check birthday paradox by generating 1000 sets of birthdays
+3) Display one set of 23 birthdays
+E) Exit
+Enter your choice --> 2
+
+Generating 1000 sets of 23 birthdays and checking for matches...
+
+Results : 484 out of 1000 (48.4%) of the sets contained matching birthdays
+==============================================================================
+
+============ Birthday Paradox Menu ============
+1) Explain birthday paradox
+2) Check birthday paradox by generating 1000 sets of birthdays
+3) Display one set of 23 birthdays
+E) Exit
+Enter your choice --> 2
+
+Generating 1000 sets of 23 birthdays and checking for matches...
+
+Results : 506 out of 1000 (50.6%) of the sets contained matching birthdays
+==============================================================================
+
+------------------------------------------------------------
+
+Menu Option: 3 (Tested nine times)
+	- Six hard-coded test for edge cases (Reference TestDisplaySet() for test data)
+	- Three random test
+
+	
+===== Test Case 1 =====
+
+Here are the results of generating a set of 23 birthdays
+
+=================================================================
+    January     1        January     2        January     3
+    January     4        January     5        January     6
+    January     7        January     8        January     9
+    January    10        January    11        January    12
+    January    13        January    14        January    15
+    January    16        January    17        January    18
+    January    19        January    20        January    21
+    January    22        January    23    
+
+
+===== Test Case 2 =====
+
+Here are the results of generating a set of 23 birthdays
+
+=================================================================
+(23) April      10  
+
+
+===== Test Case 3 =====
+
+Here are the results of generating a set of 23 birthdays
+
+=================================================================
+(2) January     5        January    10        January    20
+    January    30        February    9        February   19
+    March       1        March      11        March      21
+    March      31        April      10        April      20
+    April      30        May        10        May        20
+    May        30        June        9        June       19
+    June       29        July        9        July       19
+    July       29 
+    
+    
+===== Test Case 4 =====
+
+Here are the results of generating a set of 23 birthdays
+
+=================================================================
+    January     1        January    15        January    25
+    February    4        February   14        February   24
+    March       6        March      16        March      26
+    April       5        April      15        April      25
+    May         5        May        15        May        25
+    June        4        June       14        June       24
+    July        4        July       14        July       24
+(2) December   31    
+
+    
+===== Test Case 5 =====
+
+Here are the results of generating a set of 23 birthdays
+
+=================================================================
+(2) January     1        February   19        March       1
+    March      11        March      21        March      31
+    April      10        April      20        April      30
+    May        10        May        20        May        30
+    June        9        June       19        June       29
+    July        9        July       19        July       29
+    August      8        August     18    (2) December   31
+    
+    
+===== Test Case 6 =====
+
+Here are the results of generating a set of 23 birthdays
+
+=================================================================
+(2) February    1        February    2        February   14
+    March      31    (2) May        30        May        31
+    July       19        July       29    (2) August      8
+    August      9        September   7        September  17
+    September  27        October     7        October    17
+    October    27        November    6        November   16
+    November   26        December    6   
+    
+    
+===== Random Test 1 =====
+
+Here are the results of generating a set of 23 birthdays
+
+=================================================================
+    January    23        March       8        March      12
+    March      29        April      28        May         6
+    May        17        May        20        June        2
+    June       12        June       14        July       13
+    July       21        August     11        August     29
+(2) October     4        November    1        November    4
+(2) November   28        December    5        December   20
+
+===== Random Test 2 =====
+
+Here are the results of generating a set of 23 birthdays
+
+=================================================================
+    January     2        January    12        February    2
+    February    8        February   11        February   25
+    March      12        March      16        March      19
+    April       6        June        3        June        9
+    June       23        June       24        September  13
+    September  18        October     9        October    25
+    October    29        October    30        November   10
+    November   20        December   25  
+
+===== Random Test 3 =====
+
+Here are the results of generating a set of 23 birthdays
+
+=================================================================
+    February    3        February   12        February   17
+    March       7        March      21        March      30
+    April       8        April      23        April      30
+    May         4        May        24        June        5
+    June       16        June       26        July       29
+    July       31        August      3        September   7
+    November    3        November   23        November   28
+    December    2        December   18 
+
+------------------------------------------------------------
+
+Menu Option: E (Tested three times)
+
+============ Birthday Paradox Menu ============
+1) Explain birthday paradox
+2) Check birthday paradox by generating 1000 sets of birthdays
+3) Display one set of 23 birthdays
+E) Exit
+Enter your choice --> e
+
+Exiting program.
+
+
+============ Birthday Paradox Menu ============
+1) Explain birthday paradox
+2) Check birthday paradox by generating 1000 sets of birthdays
+3) Display one set of 23 birthdays
+E) Exit
+Enter your choice --> exit
+
+Exiting program.
+
+
+============ Birthday Paradox Menu ============
+1) Explain birthday paradox
+2) Check birthday paradox by generating 1000 sets of birthdays
+3) Display one set of 23 birthdays
+E) Exit
+Enter your choice --> E
+
+Exiting program.
+
+ */ 
 
 
 
