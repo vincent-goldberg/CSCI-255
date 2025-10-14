@@ -1,6 +1,6 @@
 /* ******************************************************************
 Author  :  Vincent Goldberg  and Matt Holloway
-Date    :  13 Oct 2025
+Date    :  14 Oct 2025
 Homework:  4
 Compiler:  JavaSE-21
 Source  :  HW4.JAVA
@@ -25,7 +25,6 @@ Action  :  Program will read in text and keeps track of the number of
           program.
 ----------------------------------------------------------------------------*/
 package homework;
-import java.util.*;
 import java.io.*;
 
 class CmdLineRecord
@@ -43,24 +42,31 @@ class CountsRecord
    int CharCount;          // number of characters
 }
 
-public class hw4
+public class hw4 
 {
-  public static void main(String[] args)
- {
-   CmdLineRecord User = new CmdLineRecord();
-   CountsRecord Data = new CountsRecord();
-   int FileOpened = 1;
+	public static void main(String[] args)
+	{
+		CmdLineRecord User = new CmdLineRecord();
+		CountsRecord Data = new CountsRecord();
+		int FileOpened = 1;
 
-   DetermineWhatUserWants(User, args);
-   
-   if (User.SyntaxError == 0)
- //     FileOpened = CountLineWordChar(Data, args[0]);
+		DetermineWhatUserWants(User, args);
+		   
+		if (User.SyntaxError == 0)
+		{
+			FileOpened = CountLineWordChar(Data, args[0]);
+		}
+		
+		if (FileOpened == 1)
+		{
+			ReportResults(User, Data, args);
+		}
+		else
+		{
+			System.err.print("Cannot open file " + args[0] + "\n");   
+		}
+	}
 
-   if (FileOpened == 1)
-      ReportResults(User, Data);
-  // else
-  //    System.err.print("Cannot open file " + args[0] + "\n");    
-}
 //------------------------------------------------------------------------
 
 /* *************  DetermineWhatUserWants  ****************************
@@ -107,9 +113,34 @@ static void DetermineWhatUserWants(CmdLineRecord U, String [] Arg)
 	  U.SyntaxError = 2; 	// Too many arguments
   }
   
-  if (Arg.length == 1)
+  if (Arg.length == 1)		// No 2nd Arg - List all counts
   {
+	  U.WantsLineCount = true;   
+	  U.WantsCharCount = true;
+	  U.WantsWordCount = true;
+  }
+  
+  if (Arg.length == 2) 
+  {
+	  String Options = Arg[1];
 	  
+	  if (!Options.startsWith("/"))
+	  {
+		  U.SyntaxError = 3; 	// Options don't start with '/'
+		  return;
+	  }
+	    
+	  for (int i = 1; i < Options.length(); i++)
+	  {
+		  char OptionChar = Options.charAt(i);
+		  switch (OptionChar)
+		  {
+		  case 'l': U.WantsLineCount = true; break;
+		  case 'w': U.WantsWordCount = true; break;
+		  case 'c': U.WantsCharCount = true; break;
+		  default: U.SyntaxError = 4; return;	// Invalid option character
+		  }
+	  }
   }
 }
 
@@ -132,15 +163,40 @@ Precondition : none
 =======================================================================*/
 static int CountLineWordChar(CountsRecord Data, String File)
 {
-   int ch;                  // current character in stream
-   int NextCh;              // Next character in stream
-   BufferedReader FileIn;    // declare FileIn to be input file   
-         
-      Data.CharCount = 0;
-      Data.WordCount = 0;
-      Data.LineCount = 0;
-            
-      return 1;   
+	
+	int CurrentChar;         // current character in stream
+	boolean InWord = false; 		 // Tracking words
+   
+	try (BufferedReader FileIn = new BufferedReader(new FileReader(File)))
+	{
+		while ((CurrentChar = FileIn.read()) != -1)
+		   {
+			   Data.CharCount++;
+			   if (CurrentChar == '\n' || CurrentChar == '\r') Data.LineCount++;
+			   
+			   if (Character.isWhitespace(CurrentChar))
+			   {
+				   InWord = false;	// Finished a word
+			   } else 
+			   {
+				   if (!InWord) 
+				   {
+					   Data.WordCount++; //Entered a word
+					   InWord = true;
+				   }
+			   }
+			 
+		   }
+		if (Data.CharCount > 0 && Data.LineCount == 0) 
+		{
+			Data.LineCount++;	// Count single line input
+		}
+		return 1;
+	}
+	catch (IOException e) 
+	{
+		return 0;
+	}
 }
 /* *********************  ReportResults  ********************************
 Action  :  Function will display the number of words, lines or characters
@@ -151,9 +207,118 @@ Parameters :
   Data - holds the number to display
 Returns    : nothing
 ======================================================================*/
-static void ReportResults(CmdLineRecord User, CountsRecord Data)
+static void ReportResults(CmdLineRecord User, CountsRecord Data, String[] Arg) 
 {
-   System.out.println("Not Yet Written");
-    
- }
+	if (User.SyntaxError > 0)
+	{
+		System.out.println("ERROR DETECTED");
+		switch (User.SyntaxError)
+		{
+		case 1: 
+			System.out.println("Missing filename on command line.");
+			break;
+		case 2:
+			System.out.println("Too many arguments provided on command line.");
+			break;
+		case 3:
+			System.out.println("Second argument must start with a '/' character.");
+			break;
+		case 4:
+			System.out.println("Invalid option character in second argument. Use only c, w, or l.");
+			break;
+		default:
+			System.out.println("Unknown syntax error.");
+		}
+		return;
+	}
+	
+	if (User.WantsCharCount)
+		System.out.println("characters = " + Data.CharCount);
+	if (User.WantsWordCount)
+		System.out.println("words = " + Data.WordCount);
+	if (User.WantsLineCount)
+		System.out.println("lines = " + Data.LineCount);
+
 }
+}
+
+/* ************************ PROGRAM OUTPUT ************************
+
+
+All 3 counts, no second argument:
+
+buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java data/words.1 
+characters = 12
+words = 3
+lines = 1
+
+
+------------------------------------------------------------
+
+
+Characters only:
+
+buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java data/words.1 /c
+characters = 12
+
+
+------------------------------------------------------------
+
+
+Characters + lines (argument order mixed):
+
+buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java data/words.1 /lc
+characters = 12
+lines = 1
+
+
+------------------------------------------------------------
+
+
+Syntax error - invalid option:
+
+buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java data/words.1 /x
+ERROR DETECTED
+Invalid option character in second argument. Use only c, w, or l.
+
+
+------------------------------------------------------------
+
+
+Syntax error - missing filename:
+
+buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java 
+ERROR DETECTED
+Missing filename on command line.
+
+
+------------------------------------------------------------
+
+
+Syntax error - no '/':
+
+buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java data/words.1 cwl
+ERROR DETECTED
+Second argument must start with a '/' character.
+
+
+------------------------------------------------------------
+
+
+Syntax error - too many arguments:
+
+buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java data/words.1 /lc extra
+ERROR DETECTED
+Too many arguments provided on command line.
+
+
+------------------------------------------------------------
+
+
+File open error - wrong filename:
+
+buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java missingfile.txt
+Cannot open file missingfile.txt
+
+
+ */ 
