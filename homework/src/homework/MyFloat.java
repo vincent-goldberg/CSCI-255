@@ -194,80 +194,259 @@ class MyFloat
 /* ************************ PROGRAM OUTPUT ************************
 
 
-All 3 counts, no second argument:
+============ Testing Digits and MaxDigits  ============
 
-buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java data/words.1 
-characters = 12
-words = 3
-lines = 1
+X.MaxDigits() = 20
 
+Enter MyFloat ==> 0.12345
 
-------------------------------------------------------------
-
-
-Characters only:
-
-buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java data/words.1 /c
-characters = 12
+Digits(0.12345) = 5
 
 
 ------------------------------------------------------------
 
 
-Characters + lines (argument order mixed):
+============ Testing Read function (Minimum) ==================
 
-buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java data/words.1 /lc
-characters = 12
-lines = 1
+Enter a MyFloat ==> 0.0
 
-
-------------------------------------------------------------
-
-
-Syntax error - invalid option:
-
-buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java data/words.1 /x
-ERROR DETECTED
-Invalid option character in second argument. Use only c, w, or l.
+After read,   X = '0.0'
 
 
 ------------------------------------------------------------
 
 
-Syntax error - missing filename:
+============ Testing Read function (Maximum) ==================
 
-buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java 
-ERROR DETECTED
-Missing filename on command line.
+Enter a MyFloat ==> 0.99999999999999999999
 
-
-------------------------------------------------------------
-
-
-Syntax error - no '/':
-
-buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java data/words.1 cwl
-ERROR DETECTED
-Second argument must start with a '/' character.
+After read,   X = '0.99999999999999999999'
 
 
 ------------------------------------------------------------
 
 
-Syntax error - too many arguments:
+============ Testing Read function (Error: Input > 1) ==================
 
-buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java data/words.1 /lc extra
-ERROR DETECTED
-Too many arguments provided on command line.
+Enter a MyFloat ==> 101.12345
+
+Input error! 
+
+After read,   X = '0.?'
+
+------------------------------------------------------------
+
+
+============ Testing Read function (Error: Input < 0) ==================
+
+Enter a MyFloat ==> -0.123
+
+Input error! 
+
+After read,   X = '0.?'
 
 
 ------------------------------------------------------------
 
 
-File open error - wrong filename:
+============ Testing Read function (Error: Invalid Input) ==================
 
-buntu-1@dev-device:~/Documents/IU/CSCI-255/homework/src/homework$ java hw4.java missingfile.txt
-Cannot open file missingfile.txt
+Enter a MyFloat ==> 0.one23
+
+Input error! 
+
+After read,   X = '0.?'
+
+
+------------------------------------------------------------
+
+
+============ Testing Read function (Ignore bad input) ==================
+
+Enter a MyFloat ==> .123-123
+
+After read,   X = '0.123'
+
+
+------------------------------------------------------------
+
+
+============ Testing Read function (Valid Input: Trailing zeros) ==================
+
+Enter a MyFloat ==> 0.12300000000000000000
+
+After read,   X = '0.123'
+
+
+------------------------------------------------------------
+
+
+============ Testing Read function (Valid Input: Leading Whitespace) ==================
+
+Enter a MyFloat ==> 
+
+
+
+        .123
+
+After read,   X = '0.123'
+
+
+------------------------------------------------------------
+
+
+============ Testing Read function (Valid Input: Middle Zeros) ==================
+
+Enter a MyFloat ==> 0.00000000000000000001
+
+After read,   X = '0.00000000000000000001'
+
+------------------------------------------------------------
+
+
+============ Testing Read function (Valid Input: > 20 digits) ==================
+
+Enter a MyFloat ==> .123456789123456789123456789
+
+After read,   X = '0.12345678912345678912'
+
+
+------------------------------------------------------------
+
+
+============ Testing Addition for MyFloats (Minimum) ============
+
+Enter a MyFloat X ==> .0
+Enter another MyFloat Y ==> .0
+
+  X    0.0
++ Y    0.0
+----------
+  Z    0.0
+
+
+------------------------------------------------------------
+
+
+============ Testing Addition for MyFloats (Maximum) ============
+
+Enter a MyFloat X ==> .99999999999999999999
+Enter another MyFloat Y ==> .99999999999999999999
+
+  X    0.99999999999999999999
++ Y    0.99999999999999999999
+-----------------------------
+  Z    0.99999999999999999998
+
+------------------------------------------------------------
+
+
+============ Testing Addition for MyFloats (Invalid Input) ============
+
+Enter a MyFloat X ==> .one23
+
+Format error! 
+
+     'X = 0.?'
+
+
+------------------------------------------------------------
+
+============ Testing Addition for MyFloats (Valid Input) ============
+
+Enter a MyFloat X ==> .111
+Enter another MyFloat Y ==> .222
+
+  X    0.111
++ Y    0.222
+------------
+  Z    0.333
+
+------------------------------------------------------------
+
+============ Testing Addition for MyFloats (Different size digits) ============
+
+Enter a MyFloat X ==> .2222
+Enter another MyFloat Y ==> .111
+
+  X    0.2222
++ Y    0.111
+-------------
+  Z    0.3332
+
+
+------------------------------------------------------------
+
+
+============ Testing Equality for MyFloats (Min/Max) ===========
+
+Enter X  ==> .0
+Enter Y  ==> .0
+
+
+0.0 is equal to 0.0
+
+
+-------Press Any key then Enter key to continue
+-------or just Enter Key to quit: l
+
+Enter X  ==> .99999999999999999999
+Enter Y  ==> .99999999999999999999
+
+
+0.99999999999999999999 is equal to 0.99999999999999999999
+
+
+------------------------------------------------------------
+
+
+============ Testing Equality for MyFloats (Valid, not equal) ===========
+
+Enter X  ==> .111
+Enter Y  ==> .121
+
+
+0.111 is NOT equal to 0.121
+
+
+------------------------------------------------------------
+
+
+============ Testing Equality for MyFloats (Valid, equal)  ===========
+
+Enter X  ==> .111
+Enter Y  ==> .111
+
+
+0.111 is equal to 0.111
+
+
+------------------------------------------------------------
+
+
+============ Testing Equality for MyFloats (Input not equal)  ===========
+
+Enter X  ==> .111
+Enter Y  ==> .11one
+
+
+0.111 is NOT equal to 0.11
+
+
+
+------------------------------------------------------------
+
+
+============ Testing Equality for MyFloats (Invalid input) ===========
+
+Enter X  ==> .111
+Enter Y  ==> .one111
+
+
+0.111 is NOT equal to 0.?
+
+
+------------------------------------------------------------
 
 
  */ 
