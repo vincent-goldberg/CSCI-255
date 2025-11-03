@@ -31,7 +31,7 @@ package homework;
 import java.io.IOException;
 
 
-class MyFloat 
+class MyFloatOriginal 
 {
 	private final int MAX_DIGITS = 20;
 	private char[] Number = new char[MAX_DIGITS +1];
@@ -39,7 +39,7 @@ class MyFloat
 	
 	
 	// Default constructor - setting NumberOfDigits = 0
-	public MyFloat()
+	public MyFloatOriginal()
 	{
 		NumberOfDigits = 0;
 		for (int i = 1; i <= MAX_DIGITS; i++)
@@ -149,9 +149,9 @@ class MyFloat
 	 * Returns: A new MyFloat representing the sum
 	 * Preconditions: Both MyFloats must be properly initialized
 	 */
-	public MyFloat Add(MyFloat Y)
+	public MyFloatOriginal Add(MyFloatOriginal Y)
 	{
-		MyFloat Z = new MyFloat();
+		MyFloatOriginal Z = new MyFloatOriginal();
 		int Carry = 0;
 		int MaxLength = Math.max(this.NumberOfDigits, Y.NumberOfDigits);
 		
@@ -177,7 +177,7 @@ class MyFloat
 	 * Returns: true if both MyFloat objects are identical digits
 	 * Precondition: Both MyFloats must be properly initialized
 	 */
-	public boolean equals(MyFloat Y)
+	public boolean equals(MyFloatOriginal Y)
 	{
 		if (this.NumberOfDigits != Y.NumberOfDigits)
 			return false;
