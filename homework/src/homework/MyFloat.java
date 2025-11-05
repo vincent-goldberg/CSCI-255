@@ -1,6 +1,6 @@
 /* ******************************************************************
 Author  :  Vincent Goldberg
-Date    :  3 Nov 2025
+Date    :  4 Nov 2025
 Homework:  6
 Compiler:  JavaSE-21
 Source  :  HW5.JAVA
@@ -100,12 +100,12 @@ class MyFloat
 		
 		int Last = NumberOfDigits;
 		// Trim trailing zeros
-		while (Last> 1 && Number[Last] == '0')
+		while (Last> 1 && Number[Last] == 0)
 			Last--; 
 		
 		// Output remaining digits
 		for (int i = 1; i <= Last; i++)
-			System.out.print(Number[i]);
+			System.out.print(((int)Number[i]));
 	}
 	
 	/*
@@ -128,10 +128,9 @@ class MyFloat
 		// Check to see if input starts with decimal
 		if (Ch != '.')
 		{
-			NumberOfDigits = 0;
 			return;
 		}
-		
+	
 		// Read in digits
 		for (int i = 1; i <= MAX_DIGITS; i++)
 		{
@@ -140,12 +139,12 @@ class MyFloat
 			{
 				break; // Not a digit; NumberOfDigits stays 0
 			}
-			Number[i] = (char) Ch;
+			Number[i] = (char) (Ch - '0');
 			NumberOfDigits++;
 		}
 		
 		// Trim trailing zeros
-		while (NumberOfDigits > 1 && Number[NumberOfDigits] == '0')
+		while (NumberOfDigits > 1 && Number[NumberOfDigits] == 0)
 			NumberOfDigits--;
 		
 		// Pad remaining with '0' for addition 
@@ -235,7 +234,7 @@ class MyFloat
 			char Digit = InputString.charAt(IndexTracker);
 			if (Digit < '0' || Digit > '9')
 				break; // Invalid character — stop reading
-			Number[DigitIndex++] = Digit; // Add and increment
+			Number[DigitIndex++] = (char) (Digit - '0'); // Add and increment
 			NumberOfDigits++;
 			IndexTracker++;
 					
@@ -267,7 +266,7 @@ class MyFloat
 		
 		// Add each stored digit
 		for (int i = 1; i <= NumberOfDigits; i++)
-			Result = Result + Number[i]; // Concatenate digits
+			Result = Result + (int) Number[i]; // Concatenate digits
 		
 		return Result;
 	}
@@ -318,39 +317,192 @@ class MyFloat
 
 /* ************************ PROGRAM OUTPUT ************************
 
+========= Testing toMyFloat function (Min Value) ================
+
+Enter a MyFloat as a String .00000000000000000001
+
+After method toMyFloat,   X = '0.00000000000000000001'
+
+------------------------------------------------------------
+
+========= Testing toMyFloat function (Max Value) ================
+
+Enter a MyFloat as a String .99999999999999999999
+
+After method toMyFloat,   X = '0.99999999999999999999'
+
+------------------------------------------------------------
+
+========= Testing toMyFloat function (Invalid Input) ================
+
+Enter a MyFloat as a String 111.111
+
+Input error! 
+
+After method toMyFloat,   X = '0.?'
+
+------------------------------------------------------------
+
+========= Testing toMyFloat function  ================
+(Leading Whitespace/Trailing Zeros)
+
+Enter a MyFloat as a String                .11111000000
+
+After method toMyFloat,   X = '0.11111'
+
+------------------------------------------------------------
+
+========= Testing toMyFloat function (Trailing Junk) ================
+
+Enter a MyFloat as a String 0.123-123
+
+After method toMyFloat,   X = '0.123'
+
+------------------------------------------------------------
+
+========= Testing toMyFloat function (Too Long Input) ================
+
+Enter a MyFloat as a String .123456789123456789123456789
+
+After method toMyFloat,   X = '0.12345678912345678912'
 
 
 ------------------------------------------------------------
 
+========= Testing toMyFloat function (Valid Input) ================
+
+Enter a MyFloat as a String .123
+
+After method toMyFloat,   X = '0.123'
+
+------------------------------------------------------------
+
+============ Testing toString Function (Min Value)  ============
+
+Enter MyFloat ==> .0000000000000000001
+
+String value is "0.0000000000000000001"
+
+------------------------------------------------------------
+
+============ Testing toString Function (Max Value)  ============
+
+Enter MyFloat ==> .9999999999999999999
+
+String value is "0.9999999999999999999"
 
 
 ------------------------------------------------------------
 
+============ Testing toString Function (Invalid Input)  ============
+
+Enter MyFloat ==> 111.111
+
+String value is "0.?"
+
+------------------------------------------------------------
+
+============ Testing toString Function  ============
+(Leading Whitespace/Trailing Zeros)
+
+Enter MyFloat ==>          .1111111100000000
+
+String value is "0.11111111"
+
+------------------------------------------------------------
+
+============ Testing toString Function (Trailing Junk) ============
+
+Enter MyFloat ==> 0.123-123
+
+String value is "0.123"
+
+------------------------------------------------------------
+
+============ Testing toString Function (Too Long Input)  ============
+
+Enter MyFloat ==> .123456789123456789123456789
+
+String value is "0.12345678912345678912"
+
+------------------------------------------------------------
+
+============ Testing toString Function (Valid Input)  ============
+
+Enter MyFloat ==> .123
+
+String value is "0.123"
+
+------------------------------------------------------------
+
+======= Testing Copy Constructor for MyFloats ==========
+
+Enter a MyFloat X ==> .00000000000000000001
+X = 0.00000000000000000001
+After creating Y with copy Constructor 
+Y = 0.00000000000000000001
+
+Now changing X to 0.1234
+X = 0.1234
+Y = 0.00000000000000000001
+Copy Constructor is working, Y not affected
+
+------------------------------------------------------------
+
+======= Testing Copy Constructor for MyFloats ==========
+
+Enter a MyFloat X ==> .999999999999999999999
+X = 0.99999999999999999999
+After creating Y with copy Constructor 
+Y = 0.99999999999999999999
+
+Now changing X to 0.1234
+X = 0.1234
+Y = 0.99999999999999999999
+Copy Constructor is working, Y not affected
+
+------------------------------------------------------------
+
+======= Testing Copy Constructor for MyFloats (Invalid Input) ==========
+
+Enter a MyFloat X ==> 111.111
+
+Format error! 
+
+     'X = 0.?'
+
+------------------------------------------------------------
+
+======= Testing Copy Constructor for MyFloats ==========
+(Valid Input: Leading whitespace / trailing zeros)
+
+Enter a MyFloat X ==>        .000123000
+X = 0.000123
+After creating Y with copy Constructor 
+Y = 0.000123
+
+Now changing X to 0.1234
+X = 0.1234
+Y = 0.000123
+Copy Constructor is working, Y not affected
+
+------------------------------------------------------------
+
+======== Testing isGreater than for MyFloats (Min/Max)  =========
+
+Enter X  ==> .00000000000000000001
+Enter Y  ==> .99999999999999999999
+
+0.99999999999999999999 is Greater than 0.00000000000000000001
 
 
 ------------------------------------------------------------
 
+======== Testing isGreater than for MyFloats (Invalid Input) =========
 
+Enter X  ==> .123
+Enter Y  ==> 123
 
-------------------------------------------------------------
-
-
-
-------------------------------------------------------------
-
-
-
-------------------------------------------------------------
-
-
-
-------------------------------------------------------------
-
-
-
-------------------------------------------------------------
-
-
-
+0.? is Greater than 0.123
 
  */ 
